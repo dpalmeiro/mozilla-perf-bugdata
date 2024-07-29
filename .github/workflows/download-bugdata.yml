@@ -1,0 +1,40 @@
+name: Download Bugzilla Data
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Runs every 6 hours
+  workflow_dispatch:
+
+jobs:
+  download-bugzilla-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Download Bugzilla data (medium impact)
+      run: |
+        curl -o bugzilla-data-medium.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,component,keywords,last_change_time,creation_time&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&o1=equals&v1=medium"
+
+    - name: Download Bugzilla data (low impact)
+      run: |
+        curl -o bugzilla-data-low.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,component,keywords,last_change_time,creation_time&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&o1=equals&v1=low"
+
+    - name: Download Bugzilla data (high impact)
+      run: |
+        curl -o bugzilla-data-high.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,component,keywords,last_change_time,creation_time&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&o1=equals&v1=high"
+
+    - name: Download Bugzilla data (untriaged)
+      run: |
+        curl -o bugzilla-data-untriaged.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,component,keywords,last_change_time,creation_time&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&o1=equals&v1=%3F"
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add bugzilla-data-medium.json bugzilla-data-low.json bugzilla-data-high.json bugzilla-data-untriaged.json
+        git commit -m "Update Bugzilla data"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
