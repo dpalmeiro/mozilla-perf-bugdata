@@ -1,4 +1,4 @@
-name: Download Bugzilla Data
+name: Download and Merge Bugzilla Data
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  download-bugzilla-data:
+  download-and-merge-bugzilla-data:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,10 +31,20 @@ jobs:
       run: |
         curl -o bugzilla-data-untriaged.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,component,keywords,last_change_time,creation_time&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&o1=equals&v1=%3F"
 
+    - name: Merge JSON files
+      run: |
+        jq -n '{high: $high[], medium: $medium[], low: $low[], untriaged: $untriaged[]}' \
+          --slurpfile high bugzilla-data-high.json \
+          --slurpfile medium bugzilla-data-medium.json \
+          --slurpfile low bugzilla-data-low.json \
+          --slurpfile untriaged bugzilla-data-untriaged.json > bugzilla-data-all.json
+
     - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add bugzilla-data-medium.json bugzilla-data-low.json bugzilla-data-high.json bugzilla-data-untriaged.json
+        git add bugzilla-data-high.json bugzilla-data-all.json
         git commit -m "Update Bugzilla data"
         git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
