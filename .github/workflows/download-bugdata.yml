@@ -17,23 +17,23 @@ jobs:
 
     - name: Download Bugzilla data (medium impact)
       run: |
-        curl -o bugzilla-data-medium.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_update_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=medium"
+        curl -o bugzilla-data-medium.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_change_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=medium"
 
     - name: Download Bugzilla data (low impact)
       run: |
-        curl -o bugzilla-data-low.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_update_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=low"
+        curl -o bugzilla-data-low.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_change_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=low"
 
     - name: Download Bugzilla data (high impact)
       run: |
-        curl -o bugzilla-data-high.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_update_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=high"
+        curl -o bugzilla-data-high.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_change_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=high"
 
     - name: Download Bugzilla data (untriaged)
       run: |
-        curl -o bugzilla-data-untriaged.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_update_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=%3F"
+        curl -o bugzilla-data-untriaged.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_change_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=%3F"
 
     - name: Download Bugzilla data (needinfo)
       run: |
-        curl -o bugzilla-data-needinfo.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_update_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=pending-needinfo"
+        curl -o bugzilla-data-needinfo.json "https://bugzilla.mozilla.org/rest/bug?include_fields=id,summary,status,resolution,component,creation_time,last_change_time,keywords,priority,severity,op_sys&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&classification=Client%20Software&classification=Developer%20Infrastructure&classification=Components&classification=Server%20Software&classification=Other&f1=cf_performance_impact&limit=0&o1=equals&v1=pending-needinfo"
 
     - name: Merge JSON files
       run: |
