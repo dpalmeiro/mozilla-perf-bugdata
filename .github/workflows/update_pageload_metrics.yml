@@ -3,7 +3,7 @@ name: Update Pageload metrics
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight, adjust as needed
+    - cron: '30 23 * * *'  # Runs daily at 11:30 PM
 
 jobs:
   merge-json:
